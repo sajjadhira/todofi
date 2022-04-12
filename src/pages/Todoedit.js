@@ -43,7 +43,10 @@ const Todoedit = () => {
   useEffect(() => {
     document.title = "Edit Todo";
 
-    if (todoinfo.data.name) {
+    if (
+      typeof todoinfo?.data.name !== "undefined" &&
+      todoinfo?.data.name !== ""
+    ) {
       setName(todoinfo.data.name);
     }
 
@@ -61,6 +64,10 @@ const Todoedit = () => {
   }
 
   if (!todoinfo) {
+    return <Unauthorize />;
+  }
+
+  if (!data) {
     return <Unauthorize />;
   }
 
