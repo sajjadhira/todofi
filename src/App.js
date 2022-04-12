@@ -17,6 +17,8 @@ import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Idlelogin from "./components/Idlelogin";
 import Todos from "./pages/Todos";
+import Newtodo from "./pages/Newtodo";
+import Todoedit from "./pages/Todoedit";
 
 export const globalContext = React.createContext();
 
@@ -26,6 +28,7 @@ function App() {
   const [loading, setLoading] = useState(true);
   const context = {
     brand_name: "todofi",
+    support_email: "support@todofi.com",
   };
 
   useEffect(() => {
@@ -58,6 +61,14 @@ function App() {
                 path="/todos/"
                 element={<Content children={<Todos />} />}
               />
+              <Route
+                path="/new/todo/"
+                element={<Content children={<Newtodo />} />}
+              />
+              <Route
+                path="/todos/edit/:id"
+                element={<Content children={<Todoedit />} />}
+              />
 
               <Route path="/login/" element={<Login />} />
               <Route
@@ -80,7 +91,7 @@ function App() {
           </div>
         </BrowserRouter>
 
-        <ReactQueryDevtools initialIsOpen={false} position="bottom-right" />
+        {/* <ReactQueryDevtools initialIsOpen={false} position="bottom-right" /> */}
       </QueryClientProvider>
     </globalContext.Provider>
   );

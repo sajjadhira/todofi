@@ -43,8 +43,8 @@ const Sidebar = () => {
           <div className="avatar">
             <Image src={avatar} roundedCircle={true} />
           </div>
-          <div className="name pt-1 fw-bold">{name}</div>
-          <div className="role pt-1 fw-light">{role.toUpperCase()}</div>
+          <div className="name pt-1 fw-bold">{name ? name : null}</div>
+          <div className="role pt-1 fw-light">{role?.toUpperCase()}</div>
         </div>
         <ul className="navbar-nav sidebar mt-5">
           <li>
@@ -62,14 +62,49 @@ const Sidebar = () => {
             </Link>
           </li>
 
+          {/* pages menu */}
+
           <li className="mt-3">
-            <Link to="/todos/" className="nav-link px-3 sidebar-link">
+            <Link
+              to="#"
+              onClick={() => setpagesmenu(!pagesmenu)}
+              aria-controls="pagesmenu"
+              aria-expanded={pagesmenu}
+              className="nav-link px-3 sidebar-link"
+            >
               <span className="me-2">
                 <BiTable />
               </span>
-              <span>All Todos</span>
+              <span>Todos</span>
+              <span className="right-icon ms-auto">
+                <BiChevronDown />
+              </span>
             </Link>
+
+            <Collapse in={pagesmenu}>
+              <div id="pagesmenu">
+                <ul className="navbar-nav ps-5">
+                  <li>
+                    <Link to="/todos/" className="nav-link mt-2">
+                      <span className="me-2 ms-2">
+                        <BiCircle />
+                      </span>
+                      <span>All Todos</span>
+                    </Link>
+                  </li>
+                  <li>
+                    <Link to="/new/todo/" className="nav-link mt-2">
+                      <span className="me-2 ms-2">
+                        <BiCircle />
+                      </span>
+                      <span>New Todo</span>
+                    </Link>
+                  </li>
+                </ul>
+              </div>
+            </Collapse>
           </li>
+          {/* pages menu */}
         </ul>
       </Offcanvas.Body>
     </>

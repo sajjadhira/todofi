@@ -7,8 +7,11 @@ const Idlelogin = () => {
 
   const navigate = useNavigate();
 
+  function IdeleLogin() {}
+
   useEffect(() => {
     if (
+      typeof localStorage.getItem("logged") !== "undefined" &&
       localStorage.getItem("logged") &&
       localStorage.getItem("logged") !== null
     ) {

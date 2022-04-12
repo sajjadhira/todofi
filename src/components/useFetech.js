@@ -20,12 +20,12 @@ let useFetech = (args) => {
   };
 
   if (
-    typeof sessionStorage.getItem("token") !== "undefined" &&
-    sessionStorage.getItem("token") != null
+    typeof localStorage.getItem("token") !== "undefined" &&
+    localStorage.getItem("token") != null
   ) {
-    const token = sessionStorage.getItem("token");
+    const token = localStorage.getItem("token");
     const auth = {
-      Authorization: "Baerar " + token,
+      Authorization: "Bearer " + token,
     };
     Object.assign(config.headers, auth);
   }
@@ -35,6 +35,8 @@ let useFetech = (args) => {
 
   let basicConig = { method: method, url: url, data: payload };
   Object.assign(config, basicConig);
+
+  // console.log(config);
 
   let request = () => {
     return axios(config).catch((err) => {

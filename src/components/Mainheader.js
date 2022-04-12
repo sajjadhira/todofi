@@ -25,6 +25,7 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 import { globalContext } from "../App";
+import axios from "axios";
 
 const Mainheader = () => {
   const [show, setShow] = useState(false);
@@ -38,12 +39,46 @@ const Mainheader = () => {
 
   // interaging logout
   const handleLogout = () => {
-    localStorage.clear();
-    toast.success("LogOut Successfully!");
+    /*
+    const controller = new AbortController();
 
-    setTimeout(() => {
-      navigate("/login/");
-    }, 1000);
+    const endpoint = "http://192.168.0.103:8000/api/";
+
+    const config = {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    };
+    let method = "post";
+    let url = endpoint + "logout";
+    let basicConig = { method: method, url: url };
+    Object.assign(config, basicConig);
+
+    const request = axios(config)
+      .catch((err) => {
+        // toast.error(err.message, {
+        //   toastId: "logout",
+        // });
+        controller.abort(err);
+      })
+      .then((data) => {
+        if (data) {
+          if (data.data.message) {
+          }
+        }
+      });
+      */
+
+    localStorage.removeItem("logged");
+    localStorage.removeItem("uid");
+    localStorage.removeItem("name");
+    localStorage.removeItem("role");
+    localStorage.removeItem("token");
+    localStorage.removeItem("session_time");
+    toast.success("LogOut Successfull", {
+      toastId: "logout",
+    });
+    return navigate("/login/");
   };
 
   const isLaptop = useMediaQuery({

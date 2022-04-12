@@ -338,3 +338,15 @@ code {
   transition: all 0.5s ease;
   cursor: pointer;
 }
+
+/* content styleing */
+
+.the-shadow {
+  /* box-shadow: 0 3px 3px #888; */
+  border-bottom: 1px solid #ccf6e4;
+}
+.the-shadow:last-child {
+  border-bottom: 1px solid transparent;
+}
+
+/* content styleing */

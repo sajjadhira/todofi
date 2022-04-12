@@ -36,7 +36,7 @@ const Login = () => {
       localStorage.getItem("logged") !== null
     ) {
       // window.location.href = "/";
-      navigate("/reactpanel/");
+      navigate("/todofi/");
     }
 
     document.title = "Login";
@@ -136,13 +136,12 @@ const Login = () => {
         })
         .then((data) => {
           if (data) {
-            console.log(data);
-
             if (data.data.message) {
               toast.error(data.data.message);
             } else {
               // console.log(data.data.token);
               const token = data.data.token;
+              const uid = data.data.user.id;
               const name = data.data.user.name;
               const role = data.data.user.role;
 
@@ -153,7 +152,7 @@ const Login = () => {
                 futureDate.setDate(futureDate.getDate() + 30);
               } else {
                 // 1 minute for check purposne
-                var minutesToAdd = 1;
+                var minutesToAdd = 60;
                 var currentDate = new Date();
                 var futureDate = new Date(
                   currentDate.getTime() + minutesToAdd * 60000
@@ -161,6 +160,7 @@ const Login = () => {
               }
 
               localStorage.setItem("logged", true);
+              localStorage.setItem("uid", uid);
               localStorage.setItem("name", name);
               localStorage.setItem("role", role);
               localStorage.setItem("token", token);
