@@ -1,6 +1,6 @@
 import axios from "axios";
-import { useState } from "react";
-import { Button, Form, Col, Row, Card } from "react-bootstrap";
+import { useEffect, useState } from "react";
+import { Button, Form, Col, Row, Card, Spinner } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import useFetech from "../components/useFetech";
@@ -11,7 +11,8 @@ import "react-loading-skeleton/dist/skeleton.css";
 const Newtodo = () => {
   const token = localStorage.getItem("token");
   const [disabled, setDisabled] = useState(false);
-  const [button, setButton] = useState("Publish");
+  const initial = "Publish";
+  const [button, setButton] = useState(initial);
   const [name, setName] = useState("");
   const [user, setUser] = useState(0);
   const [fetching, setFetching] = useState(false);
@@ -20,6 +21,10 @@ const Newtodo = () => {
   const controller = new AbortController();
 
   const endpoint = "http://192.168.0.103:8000/api/";
+
+  useEffect(() => {
+    document.title = "New TODO";
+  });
 
   const { preloader, data, isError, error, isFetching, refetch } = useFetech({
     key: ["new-todo-access-user-info"],
@@ -46,8 +51,21 @@ const Newtodo = () => {
   const handlePublish = (e) => {
     e.preventDefault();
 
+    setDisabled(true);
+    setButton(
+      <Spinner
+        as="span"
+        animation="border"
+        size="sm"
+        role="status"
+        aria-hidden="true"
+      />
+    );
+
     if (name.length == 0) {
       toast.error("Todo name cannot be empty.");
+      setDisabled(false);
+      setButton(initial);
     } else {
       const config = {
         headers: {

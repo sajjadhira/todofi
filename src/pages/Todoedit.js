@@ -1,6 +1,6 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
-import { Button, Form, Col, Row, Card } from "react-bootstrap";
+import { Button, Form, Col, Row, Card, Spinner } from "react-bootstrap";
 import { useParams, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import useFetech from "../components/useFetech";
@@ -11,8 +11,10 @@ import "react-loading-skeleton/dist/skeleton.css";
 const Todoedit = () => {
   const token = localStorage.getItem("token");
   const [disabled, setDisabled] = useState(false);
-  const [button, setButton] = useState("Publish");
+  const initial = "Update";
+  const [button, setButton] = useState(initial);
   const [name, setName] = useState("");
+  const [oldname, setOldname] = useState("");
   const [user, setUser] = useState(0);
   const [fetching, setFetching] = useState(false);
   const navigate = useNavigate();
@@ -41,17 +43,19 @@ const Todoedit = () => {
   });
 
   useEffect(() => {
-    document.title = "Edit Todo";
+    document.title = "Edit TODO";
 
     if (
       typeof todoinfo?.data.name !== "undefined" &&
       todoinfo?.data.name !== ""
     ) {
       setName(todoinfo.data.name);
+      setOldname(todoinfo.data.name);
     }
 
     if (todoFetched) {
       setName(todoinfo.data.name);
+      setOldname(todoinfo.data.name);
     }
   }, [todoinfo, todoFetched]);
 
@@ -88,8 +92,25 @@ const Todoedit = () => {
   const handlePublish = (e) => {
     e.preventDefault();
 
+    setDisabled(true);
+    setButton(
+      <Spinner
+        as="span"
+        animation="border"
+        size="sm"
+        role="status"
+        aria-hidden="true"
+      />
+    );
+
     if (name.length == 0) {
       toast.error("Todo name cannot be empty.");
+      setDisabled(false);
+      setButton(initial);
+    } else if (name == oldname) {
+      toast.error("You didn't made any change!");
+      setDisabled(false);
+      setButton(initial);
     } else {
       const config = {
         headers: {
