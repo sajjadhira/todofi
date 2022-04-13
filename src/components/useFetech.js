@@ -31,7 +31,7 @@ let useFetech = (args) => {
   }
   let method = args.method ? args.method : "get";
   let payload = args.payload ? args.payload : {};
-  let url = args.page ? args.url + "?_limit=1&_page=" + args.page : args.url;
+  let url = args.page ? args.url + "?page=" + args.page : args.url;
 
   let basicConig = { method: method, url: url, data: payload };
   Object.assign(config, basicConig);

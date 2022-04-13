@@ -344,6 +344,7 @@ code {
 .the-shadow {
   /* box-shadow: 0 3px 3px #888; */
   border-bottom: 1px solid #ccf6e4;
+  overflow: hidden;
 }
 .the-shadow:last-child {
   border-bottom: 1px solid transparent;

@@ -19,6 +19,7 @@ import Idlelogin from "./components/Idlelogin";
 import Todos from "./pages/Todos";
 import Newtodo from "./pages/Newtodo";
 import Todoedit from "./pages/Todoedit";
+import Notfound from "./pages/Notfound";
 
 export const globalContext = React.createContext();
 
@@ -75,23 +76,12 @@ function App() {
                 path="/register/"
                 element={<Content children={<Register />} />}
               />
-              <Route
-                path="*"
-                element={
-                  <Content
-                    children={
-                      <div className="text-center fw-bold ms-auto">
-                        <span className="mt-5 pt-5 fs-5">404 Not Found!</span>
-                      </div>
-                    }
-                  />
-                }
-              />
+              <Route path="*" element={<Notfound />} />
             </Routes>
           </div>
         </BrowserRouter>
 
-        {/* <ReactQueryDevtools initialIsOpen={false} position="bottom-right" /> */}
+        <ReactQueryDevtools initialIsOpen={false} position="bottom-right" />
       </QueryClientProvider>
     </globalContext.Provider>
   );

@@ -1,26 +1,65 @@
 import { useEffect, useState } from "react";
-import { Card, Table } from "react-bootstrap";
+import { Card, Pagination, Row, Col } from "react-bootstrap";
 import useFetech from "../components/useFetech";
 
 import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
 
 import { Link } from "react-router-dom";
+import Notfound from "./Notfound";
 
 const Todos = () => {
   const endpoint = "http://192.168.0.103:8000/api/";
+
+  const [page, setPage] = useState(1);
 
   useEffect(() => {
     document.title = "Todos";
   });
 
   const { preloader, data, isError, error, isFetching, refetch } = useFetech({
-    key: ["todos", 1],
+    key: ["todos", page],
     url: endpoint + "todos",
+    page: page,
   });
 
-  // console.log(endpoint + "todos");
-  // console.log(data);
+  if (data?.data?.result?.length == 0) {
+    return (
+      <>
+        <Notfound />
+      </>
+    );
+  }
+
+  // console.log(data?.data?.page);
+
+  const handlePageNumber = (active, number) => {
+    refetch();
+    setPage(number);
+  };
+
+  let active = data?.data?.page;
+  let max = data?.data?.pages;
+  let items = [];
+  for (let number = 1; number <= max; number++) {
+    items.push(
+      <Pagination.Item
+        key={number}
+        disabled={number === active}
+        onClick={(e) => handlePageNumber(e, number)}
+      >
+        {number}
+      </Pagination.Item>
+    );
+  }
+
+  const paginationBasic = (
+    <div>
+      <Pagination>{items}</Pagination>
+    </div>
+  );
+
+  // console.log(paginationBasic);
 
   return (
     <>
@@ -33,7 +72,7 @@ const Todos = () => {
           <Skeleton count={1} className="mt-3" height={500} />
         ) : (
           <Card className="mt-3">
-            {data?.data.map((todo) => {
+            {data?.data?.result?.map((todo) => {
               return (
                 <div key={todo.id} className="row p-3 the-shadow">
                   <div className="col-6 fw-bold fs-4">{todo.name}</div>
@@ -52,6 +91,10 @@ const Todos = () => {
         )}
 
         {/* <div className="row">{process.env.API_ENDPOINT}</div> */}
+
+        <Row className="mt-3 mb-3 align-self-center">
+          <Col md={12}>{paginationBasic}</Col>
+        </Row>
       </div>
     </>
   );
