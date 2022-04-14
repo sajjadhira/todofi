@@ -11,10 +11,13 @@ import Notfound from "./Notfound";
 const Todos = () => {
   const endpoint = "http://192.168.0.103:8000/api/";
 
-  const [page, setPage] = useState(1);
+  const [page, setPage] = useState(
+    localStorage.getItem("page") ? localStorage.getItem("page") : 1
+  );
 
   useEffect(() => {
     document.title = "Todos";
+    // console.log(page);
   });
 
   const { preloader, data, isError, error, isFetching, refetch } = useFetech({
@@ -36,16 +39,17 @@ const Todos = () => {
   const handlePageNumber = (active, number) => {
     refetch();
     setPage(number);
+    localStorage.setItem("page", number);
   };
 
-  let active = data?.data?.page;
+  let active = page;
   let max = data?.data?.pages;
   let items = [];
   for (let number = 1; number <= max; number++) {
     items.push(
       <Pagination.Item
         key={number}
-        disabled={number === active}
+        disabled={number == active}
         onClick={(e) => handlePageNumber(e, number)}
       >
         {number}
@@ -83,6 +87,7 @@ const Todos = () => {
                     <Link to={"edit/" + todo.id}>
                       <span className="btn btn-primary">Edit</span>
                     </Link>
+                    <span className="btn btn-danger ms-2">Delete</span>
                   </div>
                 </div>
               );
