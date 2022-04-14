@@ -8,6 +8,8 @@ import "react-loading-skeleton/dist/skeleton.css";
 import { Link } from "react-router-dom";
 import Notfound from "./Notfound";
 
+import swal from "sweetalert";
+
 const Todos = () => {
   const endpoint = "http://192.168.0.103:8000/api/";
 
@@ -35,6 +37,25 @@ const Todos = () => {
   }
 
   // console.log(data?.data?.page);
+
+  const handleDeleteNumber = (name, id) => {
+    swal({
+      title: "Are you sure?",
+      text: "want to delete '" + name + "' todo, it will never come back!",
+      icon: "warning",
+      buttons: true,
+      dangerMode: true,
+    }).then((willDelete) => {
+      if (willDelete) {
+        swal("Poof! Your imaginary file " + id + " has been deleted!", {
+          icon: "success",
+        });
+      }
+      //  else {
+      //   swal("Your imaginary data is safe!");
+      // }
+    });
+  };
 
   const handlePageNumber = (active, number) => {
     refetch();
@@ -87,7 +108,12 @@ const Todos = () => {
                     <Link to={"edit/" + todo.id}>
                       <span className="btn btn-primary">Edit</span>
                     </Link>
-                    <span className="btn btn-danger ms-2">Delete</span>
+                    <span
+                      className="btn btn-danger ms-2"
+                      onClick={(n, e) => handleDeleteNumber(todo.name, todo.id)}
+                    >
+                      Delete
+                    </span>
                   </div>
                 </div>
               );
