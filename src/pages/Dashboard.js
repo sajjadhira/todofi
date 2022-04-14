@@ -1,4 +1,4 @@
-import { Card } from "react-bootstrap";
+import { Card, Row, Col } from "react-bootstrap";
 
 import {
   LineChart,
@@ -29,6 +29,45 @@ const Dashboard = () => {
 
   // let navigate = useNavigate();
   const toastFrom = "dashboard";
+
+  // const profitCalcSingle = (index) => {
+  //   const prevIndex = pairs[index + 1] ? pairs[index + 1] : 0;
+  //   const currentIndexProfit = eGap * prevIndex;
+  //   // const currentIndexProfitAmount = currentIndexProfit * prevIndex;
+  //   return currentIndexProfit;
+  // };
+  // const profitCalcGlobal = (index) => {
+  //   const prevIndex = pairs[index + 1] ? pairs[index + 1] : 0;
+  //   const currentIndexProfit = eGap * prevIndex;
+  //   const currentIndexProfitAmount = currentIndexProfit * prevIndex;
+  //   return currentIndexProfitAmount;
+  // };
+
+  const pairs = [1, 1.1, 1.2, 1.3, 1.4, 1.5, 1.6, 1.7];
+
+  const pairCount = pairs.length;
+  const ape = 10;
+  const price = 5;
+
+  const eGap = (price / pairCount).toFixed(2);
+  // console.log(eGap);
+  var totalInvest = 0;
+
+  const profit = pairs.map((item, index) => {
+    totalInvest += parseFloat(item) * parseFloat(price);
+    const eCount = index + 1;
+    const xCount = pairCount - eCount;
+    var totalProfit = 0;
+    for (let number = xCount; number >= pairs[0]; number--) {
+      const painNum = pairs[parseInt(number)];
+      totalProfit +=
+        parseFloat(number - index) * parseFloat(eGap) * parseFloat(painNum);
+    }
+
+    if (xCount + 1 == pairCount) {
+      return totalProfit;
+    }
+  });
 
   useEffect(() => {
     if (
@@ -296,6 +335,12 @@ const Dashboard = () => {
           </Card>
         </div>
       </div>
+
+      <Row className="p-5 mb-3 text-center">
+        <Col md={12}>
+          ${profit} profit from ${totalInvest} investment
+        </Col>
+      </Row>
     </>
   );
 };
