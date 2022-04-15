@@ -30,7 +30,7 @@ const Todos = () => {
 
   console.log(endpoint);
   useEffect(() => {
-    document.title = "Todos";
+    document.title = "TODOs";
     // console.log(page);
   });
 
