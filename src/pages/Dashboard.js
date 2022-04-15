@@ -43,11 +43,11 @@ const Dashboard = () => {
   //   return currentIndexProfitAmount;
   // };
 
-  const pairs = [1, 1.1, 1.2, 1.3, 1.4, 1.5, 1.6, 1.7];
+  const pairs = [1, 1.1, 1.2, 1.3, 1.4, 1.5, 1.6, 1.7, 1.8];
 
   const pairCount = pairs.length;
   const ape = 10;
-  const price = 5;
+  const price = 2;
 
   const eGap = (price / pairCount).toFixed(2);
   // console.log(eGap);
