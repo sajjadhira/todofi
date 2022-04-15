@@ -1,4 +1,5 @@
 // import "./App.css";
+
 import "bootstrap/dist/css/bootstrap.min.css";
 
 import { BrowserRouter, Routes, Route } from "react-router-dom";
@@ -9,7 +10,6 @@ import React, { useState, useEffect } from "react";
 import Content from "./components/Content";
 import Dashboard from "./pages/Dashboard";
 
-import ClipLoader from "react-spinners/ClipLoader";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
 

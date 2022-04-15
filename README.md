@@ -29,3 +29,4 @@ ReactPanel - https://github.com/sajjadhira/reactpanel
 - Rechart - https://recharts.org/en-US/ (Using Chart)
 - React Toastify - https://www.npmjs.com/package/react-toastify (Toast Message)
 - React Spinner - https://www.npmjs.com/package/react-spinners (Preloader)
+- Sweet Alert - https://sweetalert.js.org/

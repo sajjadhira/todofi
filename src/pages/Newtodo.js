@@ -20,7 +20,7 @@ const Newtodo = () => {
 
   const controller = new AbortController();
 
-  const endpoint = "http://192.168.0.103:8000/api/";
+  const endpoint = process.env.REACT_APP_API_ENDPOINT;
 
   useEffect(() => {
     document.title = "New TODO";

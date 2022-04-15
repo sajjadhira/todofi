@@ -338,7 +338,8 @@ const Dashboard = () => {
 
       <Row className="p-5 mb-3 text-center">
         <Col md={12}>
-          ${profit} profit from ${totalInvest} investment
+          ${profit} profit from ${totalInvest} investment at{" "}
+          {process.env.REACT_APP_API_ENDPOINT}
         </Col>
       </Row>
     </>

@@ -345,6 +345,11 @@ code {
   /* box-shadow: 0 3px 3px #888; */
   border-bottom: 1px solid #ccf6e4;
   overflow: hidden;
+  transition: all 0.5s ease;
+}
+
+.the-shadow:hover {
+  border-left: 1px solid var(--brand-color);
 }
 .the-shadow:last-child {
   border-bottom: 1px solid transparent;
