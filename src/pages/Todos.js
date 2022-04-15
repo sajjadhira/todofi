@@ -40,6 +40,10 @@ const Todos = () => {
     page: page,
   });
 
+  if (data?.data?.pages < page) {
+    setPage(data?.data?.pages);
+    localStorage.setItem("page", data?.data?.pages);
+  }
   if (data?.data?.result?.length == 0) {
     return (
       <>
@@ -51,11 +55,57 @@ const Todos = () => {
   // console.log(data?.data?.page);
 
   const handleDelete = (id) => {
-    const responseOfDelete = {
-      message: "Your requested task " + id + " has deleted succesffuly",
-      type: "success",
+    var err = "";
+    const config = {
+      headers: {
+        "Content-Type": "application/json",
+      },
     };
-    return responseOfDelete;
+    if (
+      typeof localStorage.getItem("token") !== "undefined" &&
+      localStorage.getItem("token") != null
+    ) {
+      const token = localStorage.getItem("token");
+      const auth = {
+        Authorization: "Bearer " + token,
+      };
+      Object.assign(config.headers, auth);
+    }
+    let method = "delete";
+    let payload = { id };
+    let url = endpoint + "todos/" + id;
+
+    let basicConig = {
+      method: method,
+      url: url,
+    };
+
+    Object.assign(config, basicConig);
+
+    const request = axios(config)
+      .catch((err) => {
+        toast.error(err.message);
+        controller.abort(err);
+      })
+      .then((data) => {
+        if (data) {
+          if (data.data.message) {
+            return swal("Error", err.message, "error");
+          } else {
+            // setPage(1);
+            // localStorage.setItem("page", 1);
+            refetch();
+            return swal(
+              "Success",
+              "Your requested task has deleted succesffuly",
+              "success"
+            );
+
+            // swal.stopLoading();
+            // swal.close();
+          }
+        }
+      });
   };
 
   const handleDeleteNumber = (name, id) => {
@@ -68,9 +118,6 @@ const Todos = () => {
     }).then((willDelete) => {
       if (willDelete) {
         const resultDelete = handleDelete(id);
-        swal(resultDelete.message, {
-          icon: resultDelete.type,
-        });
       }
       //  else {
       //   swal("Your imaginary data is safe!");
